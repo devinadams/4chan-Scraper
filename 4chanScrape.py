@@ -64,9 +64,9 @@ def main(url):
 		for element in new_elements:
 			if ".jpg" in str(element) or '.png' in str(element) or '.gif' in str(element):
 				raw_img = urllib2.urlopen("http:" + element).read()
-				DIR="C:\\Users\\deez\\Desktop\\test\\"
+				DIR=dirr# "C:\\Users\\deez\\Desktop\\test\\"
 				cntr = len([i for i in os.listdir(DIR) if image_name in i]) + 1
-				print("Saving img: " + str(cntr) + "  :      " + str(element))
+				print("Saving img: " + str(cntr) + "  :      " + str(element) + " to: "+ dirr )
 				f = open(DIR + image_name + "_"+ str(cntr)+".jpg", 'wb')
 				f.write(raw_img)
 				f.close()
@@ -78,7 +78,7 @@ def main(url):
 print """Boards: [a / b / c / d / e / f / g / gif / h / hr / k / m / o / p / r / s / t / u / v / vg / vr / w / wg] [i / ic] [r9k] [s4s] [cm / hm / lgbt / y] [3 / aco / adv / an / asp / biz / cgl / ck / co / diy / fa / fit / gd / hc / his / int / jp / lit / mlp / mu / n / news / out / po / pol / qst / sci / soc / sp / tg / toy / trv / tv / vp / wsg / wsr / x]"""	
 print "\n"
 board = raw_input("Enter the board letter (Example: b, p, w): ")
-
+dirr = raw_input("Enter the working directory (USE DOUBLE SLASHES): (Example: C:\\\Users\\\Username\\\Desktop\\\Folder\\: ")
 # Define our starting page number and first try value			
 page = 2
 firstTry = True
@@ -91,7 +91,7 @@ if firstTry == True:
 	# After first iteration, this loop changes the url after each completed page by calling our main function again each time.
 	while page <= 10 and page >= 2 and firstTry == False:
 		firstTry == False
-		url = "http://boards.4chan.org/"+board+"/"+str(n)+"/"
+		url = "http://boards.4chan.org/"+board+"/"+str(page)+"/"
 		print url
 		page = page + 1
 		p = page - 1
