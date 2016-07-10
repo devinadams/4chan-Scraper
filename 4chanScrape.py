@@ -78,7 +78,7 @@ def main(url):
 print """Boards: [a / b / c / d / e / f / g / gif / h / hr / k / m / o / p / r / s / t / u / v / vg / vr / w / wg] [i / ic] [r9k] [s4s] [cm / hm / lgbt / y] [3 / aco / adv / an / asp / biz / cgl / ck / co / diy / fa / fit / gd / hc / his / int / jp / lit / mlp / mu / n / news / out / po / pol / qst / sci / soc / sp / tg / toy / trv / tv / vp / wsg / wsr / x]"""	
 print "\n"
 board = raw_input("Enter the board letter (Example: b, p, w): ")
-dirr = raw_input("Enter the working directory (USE DOUBLE SLASHES): (Example: C:\\\Users\\\Username\\\Desktop\\\Folder\\: ")
+dirr = raw_input("Enter the working directory (USE DOUBLE SLASHES): (Example: C:\\\Users\\\Username\\\Desktop\\\Folder\\\: ")
 # Define our starting page number and first try value			
 page = 2
 firstTry = True
