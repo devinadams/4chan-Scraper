@@ -67,11 +67,12 @@ def main(url):
 				passed = False
 				while(retries < 3):	
 					try:
-						raw_img = urllib2.urlopen("http:" + element).read()
-						DIR=dirr# "C:\\Users\\deez\\Desktop\\test\\"
-						cntr = len([i for i in os.listdir(DIR) if image_name in i]) + 1
+						if "https:" not in element and "http:" not in element:
+							element = "http:"+element			
+						raw_img = urllib2.urlopen(element).read()
+						cntr = len([i for i in os.listdir(dirr) if image_name in i]) + 1
 						print("Saving img: " + str(cntr) + "  :      " + str(element) + " to: "+ dirr )
-						with open(DIR + image_name + "_"+ str(cntr)+".jpg", 'wb') as f:
+						with open(dirr + image_name + "_"+ str(cntr)+".jpg", 'wb') as f:
 							f.write(raw_img)
 						passed = True
 						break
@@ -102,7 +103,6 @@ if firstTry == True:
 	while page <= 10 and page >= 2 and firstTry == False:
 		firstTry == False
 		url = "http://boards.4chan.org/"+board+"/"+ str(page) +"/"
-		print url
 		page = page + 1
 		p = page - 1
 		print("Page: " + str(p))
