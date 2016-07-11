@@ -1,12 +1,13 @@
 ##@author klorox
-
-
 from bs4 import BeautifulSoup
 import requests
 import re
 import urllib2
 import os
 import collections
+from PIL import Image    
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True                                                                            
 
 print"""
 
@@ -24,11 +25,11 @@ print"""
 
 	
 	
-# Gather our HTML source code from the pages
+	# Gather our HTML source code from the pages
 def get_soup(url,header):
   return BeautifulSoup(urllib2.urlopen(urllib2.Request(url, headers=header)), 'lxml')
 
-# Main logic function, we use this to re-iterate through the pages
+	# Main logic function, we use this to re-iterate through the pages
 def main(url):
 	image_name = "image"
 	print url
@@ -39,39 +40,44 @@ def main(url):
 	anchors = soup.findAll('a')
 	links = [a['href'] for a in anchors if a.has_attr('href')]
 	
-# Grabs all the a anchors from the HTML source which contain our image links
+	# Grabs all the a anchors from the HTML source which contain our image links
 	def get_anchors(links):
 		for a in anchors:
 			links.append(a['href'])
 		return links
 
-# Gather the raw links and sort them		
+	# Gather the raw links and sort them		
 	raw_links = get_anchors(links)
 	raw_links.sort()
 
-# Parse out any duplicate links
+	# Parse out any duplicate links
 	def get_duplicates(arr):
 		dup_arr = arr[:]
 		for i in set(arr):
 			dup_arr.remove(i)       
 		return list(set(dup_arr))   
 		
-# Define our list of new links and call the function to parse out duplicates
+	# Define our list of new links and call the function to parse out duplicates
 	new_elements = get_duplicates(raw_links)
 
-# Get the image links from the raw links, make a request, then write them to a folder.
+	# Get the image links from the raw links, make a request, then write them to a folder.
 	def get_img():		
 		for element in new_elements:
 			if ".jpg" in str(element) or '.png' in str(element) or '.gif' in str(element):
 				retries = 0
 				passed = False
+	# Retry scraping 3 times on the element if exception is thrown
 				while(retries < 3):	
 					try:
+	# Check if the link uses HTTPS or HTTP, not sure why but 4chan switches between the 2
 						if "https:" not in element and "http:" not in element:
-							element = "http:"+element			
+							element = "http:"+element	
+	# Read the element
 						raw_img = urllib2.urlopen(element).read()
+	# Check previous file names to determine our new one.
 						cntr = len([i for i in os.listdir(dirr) if image_name in i]) + 1
 						print("Saving img: " + str(cntr) + "  :      " + str(element) + " to: "+ dirr )
+	# Write the file
 						with open(dirr + image_name + "_"+ str(cntr)+".jpg", 'wb') as f:
 							f.write(raw_img)
 						passed = True
@@ -85,11 +91,15 @@ def main(url):
 # Call our image writing function			
 	get_img()
 
-# Ask the user which board they would like to use
+# Ask the user which board they would like to use and directory they would like to save in
 print """Boards: [a / b / c / d / e / f / g / gif / h / hr / k / m / o / p / r / s / t / u / v / vg / vr / w / wg] [i / ic] [r9k] [s4s] [cm / hm / lgbt / y] [3 / aco / adv / an / asp / biz / cgl / ck / co / diy / fa / fit / gd / hc / his / int / jp / lit / mlp / mu / n / news / out / po / pol / qst / sci / soc / sp / tg / toy / trv / tv / vp / wsg / wsr / x]"""	
 print "\n"
 board = raw_input("Enter the board letter (Example: b, p, w): ")
 dirr = raw_input("Enter the working directory (USE DOUBLE SLASHES): (Example: C:\\\Users\\\Username\\\Desktop\\\Folder\\: ")
+
+# Open the directory
+os.startfile(dirr)
+
 # Define our starting page number and first try value			
 page = 2
 firstTry = True
@@ -107,6 +117,8 @@ if firstTry == True:
 		p = page - 1
 		print("Page: " + str(p))
 		main(url)
+		
+		
 			
 	
 			
