@@ -19,7 +19,7 @@ print"""
 |_  _| | (__| __ |/ _ \ | .` |          | | | |\/| | | (_ |       \__ \| (__|   /  / _ \ | '_ \| _||   /  
   |_|   \___|_||_/_/ \_\|_|\_|         |___||_|  |_|  \___|       |___/ \___|_|_\ /_/ \_\| .__/|___|_|_\  
                                                                                          |_|              
-					written by klorox												 																						 																						 
+					written by klorox, some by Icewave											 																						 																						 
 																						 """
 
 	
@@ -63,13 +63,23 @@ def main(url):
 	def get_img():		
 		for element in new_elements:
 			if ".jpg" in str(element) or '.png' in str(element) or '.gif' in str(element):
-				raw_img = urllib2.urlopen("http:" + element).read()
-				DIR="C:\\Users\\deez\\Desktop\\test\\"
-				cntr = len([i for i in os.listdir(DIR) if image_name in i]) + 1
-				print("Saving img: " + str(cntr) + "  :      " + str(element) + " to: "+ DIR )
-				f = open(DIR + image_name + "_"+ str(cntr)+".jpg", 'wb')
-				f.write(raw_img)
-				f.close()
+				retries = 0
+				passed = False
+				while(retries < 3):	
+					try:
+						raw_img = urllib2.urlopen("http:" + element).read()
+						DIR=dirr# "C:\\Users\\deez\\Desktop\\test\\"
+						cntr = len([i for i in os.listdir(DIR) if image_name in i]) + 1
+						print("Saving img: " + str(cntr) + "  :      " + str(element) + " to: "+ dirr )
+						with open(DIR + image_name + "_"+ str(cntr)+".jpg", 'wb') as f:
+							f.write(raw_img)
+						passed = True
+						break
+					except urllib2.URLError, e:
+						retries += 1
+						print "Failed on", element, "(Retrying", retries, ")"
+				if not passed:
+					print "Failed on ", element, "skipping..."
 				
 # Call our image writing function			
 	get_img()
@@ -78,7 +88,7 @@ def main(url):
 print """Boards: [a / b / c / d / e / f / g / gif / h / hr / k / m / o / p / r / s / t / u / v / vg / vr / w / wg] [i / ic] [r9k] [s4s] [cm / hm / lgbt / y] [3 / aco / adv / an / asp / biz / cgl / ck / co / diy / fa / fit / gd / hc / his / int / jp / lit / mlp / mu / n / news / out / po / pol / qst / sci / soc / sp / tg / toy / trv / tv / vp / wsg / wsr / x]"""	
 print "\n"
 board = raw_input("Enter the board letter (Example: b, p, w): ")
-#dirr = raw_input("Enter the working directory (USE DOUBLE SLASHES): (Example: C:\\\Users\\\Username\\\Desktop\\\Folder\\: ")
+dirr = raw_input("Enter the working directory (USE DOUBLE SLASHES): (Example: C:\\\Users\\\Username\\\Desktop\\\Folder\\: ")
 # Define our starting page number and first try value			
 page = 2
 firstTry = True
