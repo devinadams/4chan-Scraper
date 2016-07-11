@@ -8,7 +8,7 @@ Also it currently saves every image as a jpeg, working on saving in orginal form
 
 Requires BeatifulSoup and requests to run.
 
-uses python 2.7,
+uses python 2.7
 
 pip install requests
 
