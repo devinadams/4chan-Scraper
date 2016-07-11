@@ -1,5 +1,5 @@
-# 4chanScraper
-4chan python image scraper
+# 4chan Image Scraper
+4chan Python Image Scraper
 
 
 Parses all 10 pages and scrapes all the imgs on the front pages. 
