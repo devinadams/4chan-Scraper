@@ -14,6 +14,6 @@ pip install requests
 
 pip install beautifulsoup4
 
-Currently the working directory is "DIR="C:\\Users\\deez\\Desktop\\test\\"" so change it to wherever you want it to dump the images.
+Make sure you specify the directory with double slashes or it wont work.
 
 
