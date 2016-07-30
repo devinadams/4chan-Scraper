@@ -1,5 +1,5 @@
 # 4chan Image Scraper
-4chan Python Image Scraper
+4Chan Python Image Scraper
 
 
 Parses all 10 pages and scrapes all the imgs on the front pages. 
@@ -8,9 +8,11 @@ Also it currently saves every image as a jpeg, working on saving in orginal form
 
 Requires beautifulsoup4 and requests to run.
 
-uses python 2.7
+Uses python 3.5
 
 pip install requests
+
+pip install image
 
 pip install beautifulsoup4
 
